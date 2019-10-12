@@ -6,12 +6,22 @@ from rest_framework.response import Response
 from rest_framework import status
 import json 
 
-class MyView(View):
+class initialFilter(APIView):
     def get(self, request):
-        
+
+        """
+        Returns the data for the initial quest to the user
+        """
+
         result="aligual loco"
         return Response(result,status=status.HTTP_200_OK)
+
     def post(self,request,format=None):
+        """
+        Saves the json with the client id
+        """
+        
+        
 
         return Response("Done",status=status.HTTP_200_OK)
 # Create your views here.

@@ -121,6 +121,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+#OGGING = {
+#   'applogfile': {
+#       'level':'DEBUG',
+#       'class':'logging.handlers.RotatingFileHandler',
+#       'filename': os.path.join(BASE_DIR, 'FlyFilter.log'),
+# #     'maxBytes': 1024*1024*15, # 15MB
+##      'backupCount': 10,
+#   }
+#    
+#}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
