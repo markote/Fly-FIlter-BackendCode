@@ -4,7 +4,9 @@ from questUser import views
 
 urlpatterns = [
     url(r'^filters/weather/$', views.weatherFilters.as_view()),
+    url(r'^cities/info/$', views.citiesInfo.as_view()),
     url(r'^filters/initial/$', views.initialFilter.as_view()),
+    url(r'^filters/final/', views.finalFilter.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

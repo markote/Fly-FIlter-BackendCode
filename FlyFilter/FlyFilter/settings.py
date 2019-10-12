@@ -25,7 +25,8 @@ SECRET_KEY = '@jugqd#4-ta6iziwl#g^v17kw-i(b#_0o4i&!^4e^d6$56*erz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','147.83.201.96'] #local y desde el router UPC
+#ALLOWED_HOSTS = ['localhost','147.83.201.96'] #local y desde el router UPC
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'FlyFilter',
     'dataEater',
-    'questUser'
+    'questUser',
+    'corsheaders',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -51,6 +53,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'FlyFilter.urls'
@@ -73,6 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FlyFilter.wsgi.application'
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -121,16 +125,50 @@ USE_L10N = True
 
 USE_TZ = True
 
-#OGGING = {
-#   'applogfile': {
-#       'level':'DEBUG',
-#       'class':'logging.handlers.RotatingFileHandler',
-#       'filename': os.path.join(BASE_DIR, 'FlyFilter.log'),
-# #     'maxBytes': 1024*1024*15, # 15MB
-##      'backupCount': 10,
-#   }
-#    
-#}
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+
+        'applogfile': {
+        'level':'DEBUG',
+        'class':'logging.handlers.RotatingFileHandler',
+        'filename': os.path.join(BASE_DIR, 'FlyFilter.log'),
+        'maxBytes': 1024*1024*15, # 15MB
+        'backupCount': 10,
+        }
+    },
+    'loggers': {
+        
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        
+        'FlyFilter': {
+            'handlers': ['applogfile',],
+            'level': 'DEBUG',
+        }
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

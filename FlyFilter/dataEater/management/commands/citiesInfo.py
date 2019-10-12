@@ -18,6 +18,14 @@ inputPathFiltersWeather = "/home/ubuntu/REPOS/Fly-Filter-Backend/FlyFilter/filte
 FiltersWeather = {}
 CitiesInfoSS = {}
 
+def getImatgeLink(cityName):
+    try:
+        result = requests.get(url = 'https://pixabay.com/api/?key=13916186-97bee2f2431d04895560b2980&q='+cityName.replace(' ', '+') +'&image_type=photo').json()
+        return result['hits'][0]['largeImageURL']
+    except Exception as e:
+        return None
+    except KeyboardInterrupt:
+        exit()
 
 def callSkyScanner():
     citiesInfo = []
@@ -40,13 +48,18 @@ def callSkyScanner():
                         'id':               city['Id'],
                         'temperature':      ["{0:.2f}".format(v + random.uniform(-3, 3)) for v in FiltersWeather[city['CountryId']]['tas'] ],
                         'precipitation':    ["{0:.2f}".format(v + random.uniform(-20, 20)) for v in FiltersWeather[city['CountryId']]['pr'] ],
-                        'airQuality':       ["{0:.2f}".format(float(v) + random.uniform(-10, 10)) for v in FiltersWeather[city['CountryId']]['AirQuality'] ]
+                        'airQuality':       ["{0:.2f}".format(float(v) + random.uniform(-10, 10)) for v in FiltersWeather[city['CountryId']]['AirQuality'] ],
+                        'imatge':           getImatgeLink(city['Name']),
                     }
+                    print i, aux['imatge']
                     citiesInfo.append(aux)
 
                 else:
                     #print j,'ERROOOOOR',city['CountryId']
                     j += 1
+            
+        
+    
     with open('citiesInfo.json', 'w') as json_file:
         json.dump(citiesInfo, json_file)
     #print j
