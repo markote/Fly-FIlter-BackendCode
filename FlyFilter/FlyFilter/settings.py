@@ -25,7 +25,7 @@ SECRET_KEY = '@jugqd#4-ta6iziwl#g^v17kw-i(b#_0o4i&!^4e^d6$56*erz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','147.83.201.96'] #local y desde el router UPC
 
 
 # Application definition
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'FlyFilter',
+    'dataEater',
+    'questUser'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -76,8 +79,12 @@ WSGI_APPLICATION = 'FlyFilter.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'flyfilter',
+        'USER': 'admin',
+        'PASSWORD': 'password',
+        'HOST': 'fly-filter.ck7dtn9mfny0.eu-central-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -119,3 +126,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
